@@ -29,7 +29,7 @@ function smoothScrollTo(targetY, duration=500){
   requestAnimationFrame(step);
 }
 
-$('a[href^="#"]').forEach(a=>{
+$$('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
     const id = a.getAttribute('href').slice(1);
     const el = document.getElementById(id);
@@ -40,24 +40,46 @@ $('a[href^="#"]').forEach(a=>{
   });
 });
 
-$('.buy-btn').forEach(btn=>{
+$$('.buy-btn').forEach(btn=>{
   const panel = btn.nextElementSibling;
-  btn.addEventListener('click',()=>{
+  btn.addEventListener('click',(e)=>{
     const expanded = btn.getAttribute('aria-expanded') === 'true';
+    
+    // Close all other panels first
+    $$('.buy-panel').forEach(p=> p.hidden = true);
+    $$('.buy-btn, .shop-toggle').forEach(b=> b.setAttribute('aria-expanded','false'));
+    
+    // Toggle current
     btn.setAttribute('aria-expanded', String(!expanded));
     if(panel) panel.hidden = expanded;
   });
 });
 
+const shopToggle = $('.shop-toggle');
+if(shopToggle){
+  const panel = shopToggle.nextElementSibling;
+  shopToggle.addEventListener('click', ()=>{
+    const expanded = shopToggle.getAttribute('aria-expanded') === 'true';
+    
+    // Close all other panels first
+    $$('.buy-panel').forEach(p=> p.hidden = true);
+    $$('.buy-btn, .shop-toggle').forEach(b=> b.setAttribute('aria-expanded','false'));
+    
+    // Toggle current
+    shopToggle.setAttribute('aria-expanded', String(!expanded));
+    if(panel) panel.hidden = expanded;
+  });
+}
+
 document.addEventListener('click',e=>{
   const t = e.target;
   if(!(t instanceof Element)) return;
-  if(t.closest('.buy-btn') || t.closest('.buy-panel')) return;
-  $('.buy-panel').forEach(p=> p.hidden = true);
-  $('.buy-btn').forEach(b=> b.setAttribute('aria-expanded','false'));
+  if(t.closest('.buy-btn') || t.closest('.shop-toggle') || t.closest('.buy-panel')) return;
+  $$('.buy-panel').forEach(p=> p.hidden = true);
+  $$('.buy-btn, .shop-toggle').forEach(b=> b.setAttribute('aria-expanded','false'));
 });
 
-$(".hero-actions .btn-primary").forEach(el => {
+$$(".hero-actions .btn-primary").forEach(el => {
   el.addEventListener("click", (e) => {
     e.preventDefault();
     const target = document.getElementById("products");
@@ -84,4 +106,4 @@ function setNote(text, type){
   note.style.color = type === "success" ? "#22c55e" : "#ef4444";
 }
 
-$(".card, .hero-copy, .hero-media").forEach(el => el.classList.add("fade-up"));
+$$(".card, .hero-copy, .hero-media").forEach(el => el.classList.add("fade-up"));

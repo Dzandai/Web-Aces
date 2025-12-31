@@ -86,12 +86,13 @@ html{scroll-padding-top:72px}
 .section-head p{color:var(--muted); margin:0 0 18px}
 .grid{display:grid; gap:16px}
 .card{
-  background:var(--card); border-radius:18px; overflow:hidden;
+  background:var(--card); border-radius:18px; overflow:visible;
   box-shadow:var(--shadow); display:flex; flex-direction:column;
   transition:transform .15s ease, box-shadow .2s ease;
+  position: relative; z-index: 1;
 }
-.card:hover{transform:translateY(-2px); box-shadow:0 14px 32px rgba(2,8,23,.12)}
-.card picture img{width:100%; height:auto; display:block}
+.card:hover{transform:translateY(-2px); box-shadow:0 14px 32px rgba(2,8,23,.12); z-index: 10;}
+.card picture img{width:100%; height:auto; display:block; border-radius: 18px 18px 0 0;}
 .card-body{padding:16px}
 .card-body h3{margin:0 0 4px; font-size:18px}
 .price{color:var(--text); font-weight:600; margin:0 0 12px}
@@ -105,7 +106,11 @@ html{scroll-padding-top:72px}
 .buy-btn:active{transform:translateY(1px)}
 .buy-icon{width:18px; height:18px; border-radius:4px; background:#fff; opacity:.9}
 .buy-caret{width:10px; height:10px; border-right:2px solid #fff; border-bottom:2px solid #fff; transform:rotate(45deg)}
-.buy-panel{margin-top:10px; background:#fff; border-radius:14px; box-shadow:var(--shadow); padding:8px; display:grid; gap:6px}
+.buy-wrapper { position: relative; }
+.buy-panel{
+  position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 50;
+  background:#fff; border-radius:14px; box-shadow:var(--shadow); padding:8px; display:grid; gap:6px;
+}
 .buy-panel[hidden]{display:none}
 .buy-link{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; color:var(--text); text-decoration:none}
 .buy-link:hover{background:#f1f5f9}
@@ -127,6 +132,15 @@ html{scroll-padding-top:72px}
 }
 .newsletter input:focus{outline:2px solid var(--ring); outline-offset:2px}
 .copyright{border-top:1px solid rgba(226,232,240,.1); padding:16px 0; color:#94a3b8}
+
+.nav-dropdown-wrapper { position: relative; display: flex; align-items: center; }
+.nav-dropdown-wrapper .buy-panel {
+  top: calc(100% + 12px); left: 50%; transform: translateX(-50%);
+  width: max-content; min-width: 200px;
+}
+.nav-link.shop-toggle {
+  background: none; border: none; font-family: inherit; font-size: inherit; cursor: pointer; padding: 0;
+}
 
 @media (min-width:640px){
   .nav{display:flex}
