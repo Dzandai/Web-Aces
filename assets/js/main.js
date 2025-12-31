@@ -79,7 +79,7 @@ document.addEventListener('click',e=>{
   $$('.buy-btn, .shop-toggle').forEach(b=> b.setAttribute('aria-expanded','false'));
 });
 
-$$(".hero-actions .btn-primary").forEach(el => {
+$(".hero-actions .btn-primary").forEach(el => {
   el.addEventListener("click", (e) => {
     e.preventDefault();
     const target = document.getElementById("products");
@@ -89,21 +89,4 @@ $$(".hero-actions .btn-primary").forEach(el => {
   });
 });
 
-const note = $("#newsletterNote");
-$("#newsletterForm")?.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const email = $("#email").value.trim();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    setNote("Masukkan email yang valid", "error");
-    return;
-  }
-  setNote("Terima kasih! Kami telah mengirim konfirmasi ke email Anda.", "success");
-});
-
-function setNote(text, type){
-  if (!note) return;
-  note.textContent = text;
-  note.style.color = type === "success" ? "#22c55e" : "#ef4444";
-}
-
-$$(".card, .hero-copy, .hero-media").forEach(el => el.classList.add("fade-up"));
+$(".card, .hero-copy, .hero-media").forEach(el => el.classList.add("fade-up"));
